@@ -70,6 +70,7 @@ export const projects: Project[] = [
     ],
     category: "web",
     featured: true,
+    github: "https://github.com/arindu0905/LMMS",
   },
   {
     id: "edufix",
