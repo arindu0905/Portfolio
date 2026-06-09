@@ -42,8 +42,8 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { icon: FaGithub, label: "GitHub", href: "https://github.com/" },
-  { icon: FaLinkedin, label: "LinkedIn", href: "https://linkedin.com/in/" },
+  { icon: FaGithub, label: "GitHub", href: "https://github.com/arindu0905" },
+  { icon: FaLinkedin, label: "LinkedIn", href: "https://linkedin.com/in/arindumandinu" },
   { icon: Mail, label: "Email", href: `mailto:${personalInfo.email}` },
 ];
 

@@ -180,12 +180,12 @@ export const certifications: Certification[] = [
 export const socialLinks: SocialLink[] = [
   {
     label: "GitHub",
-    href: "https://github.com/",
+    href: "https://github.com/arindu0905",
     icon: "github",
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/",
+    href: "https://linkedin.com/in/arindumandinu",
     icon: "linkedin",
   },
   {

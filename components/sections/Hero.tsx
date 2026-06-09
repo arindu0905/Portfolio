@@ -179,8 +179,8 @@ export default function Hero() {
             className="flex gap-2.5 justify-center lg:justify-start"
           >
             {[
-              { icon: FaGithub, href: "https://github.com/", label: "GitHub" },
-              { icon: FaLinkedin, href: "https://linkedin.com/in/", label: "LinkedIn" },
+              { icon: FaGithub, href: "https://github.com/arindu0905", label: "GitHub" },
+              { icon: FaLinkedin, href: "https://linkedin.com/in/arindumandinu", label: "LinkedIn" },
               { icon: Mail, href: `mailto:${personalInfo.email}`, label: "Email" },
             ].map(({ icon: Icon, href, label }) => (
               <a
