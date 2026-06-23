@@ -172,6 +172,18 @@ export const experience: ExperienceItem[] = [
 
 export const certifications: Certification[] = [
   {
+    title: "Business Analysis & Process Management",
+    issuer: "Coursera",
+    year: 2026,
+    credential: "https://coursera.org/share/cf6c139bddaac36779cde3f2eb0481ef",
+  },
+  {
+    title: "Introduction to Business Analysis Using Spreadsheets: Basics",
+    issuer: "Coursera",
+    year: 2026,
+    credential: "https://coursera.org/share/14aaf6d895d8c3908cbd5a3e012630b6",
+  },
+  {
     title: "Professional Certificate in Python Programming",
     issuer: "Informatics Institute of Technology (IIT) – PDU",
     year: 2024,
@@ -200,7 +212,7 @@ export const stats: Stat[] = [
   { label: "Projects Built", value: 5, suffix: "+" },
   { label: "Technologies", value: 20, suffix: "+" },
   { label: "Years Coding", value: 2, suffix: "+" },
-  { label: "Certifications", value: 1, suffix: "+" },
+  { label: "Certifications", value: 3, suffix: "+" },
 ];
 
 export const personalInfo = {
