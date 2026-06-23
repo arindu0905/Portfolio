@@ -1,12 +1,32 @@
 "use client";
-import { motion } from "framer-motion";
-import { Award, Calendar, Building2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Award, Calendar, Building2, X, Eye } from "lucide-react";
 import SectionHeader from "@/components/common/SectionHeader";
 import { useInView } from "@/hooks/useInView";
 import { certifications } from "@/lib/data";
+import { Certification } from "@/types";
 
 export default function Certifications() {
   const { ref, isInView } = useInView();
+  const [activeCert, setActiveCert] = useState<Certification | null>(null);
+
+  // Close modal on escape key press & manage body overflow
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveCert(null);
+      }
+    };
+    if (activeCert) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [activeCert]);
 
   return (
     <section id="certifications" className="py-24 px-4 section-bg relative overflow-hidden">
@@ -25,7 +45,14 @@ export default function Certifications() {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -5 }}
-              className="relative group rounded-2xl theme-card p-6 overflow-hidden"
+              onClick={() => {
+                if (cert.image) {
+                  setActiveCert(cert);
+                }
+              }}
+              className={`relative group rounded-2xl theme-card p-6 overflow-hidden ${
+                cert.image ? "cursor-pointer" : ""
+              }`}
             >
               {/* Top line on hover */}
               <div
@@ -55,22 +82,105 @@ export default function Certifications() {
                 </div>
               </div>
 
-              {cert.credential && (
-                <div className="mt-4 pt-4" style={{ borderTop: "1px solid var(--border-color)" }}>
-                  <a
-                    href={cert.credential}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-theme-muted hover:text-theme-primary font-semibold transition-colors"
-                  >
-                    View Credential →
-                  </a>
+              {(cert.credential || cert.image) && (
+                <div className="mt-4 pt-4 flex items-center justify-between gap-4" style={{ borderTop: "1px solid var(--border-color)" }}>
+                  {cert.image ? (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveCert(cert);
+                      }}
+                      className="text-xs text-accent hover:text-theme-primary font-semibold transition-colors flex items-center gap-1.5"
+                    >
+                      <Eye size={12} />
+                      View Certificate
+                    </button>
+                  ) : (
+                    <div />
+                  )}
+                  
+                  {cert.credential && (
+                    <a
+                      href={cert.credential}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-xs text-theme-muted hover:text-theme-primary font-semibold transition-colors"
+                    >
+                      Verify Credential →
+                    </a>
+                  )}
                 </div>
               )}
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* Certificate Lightbox Modal */}
+      <AnimatePresence>
+        {activeCert && activeCert.image && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveCert(null)}
+            className="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 md:p-6"
+          >
+            {/* Modal Container */}
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative max-w-4xl w-full bg-[#121212] border border-[#232323] rounded-2xl overflow-hidden shadow-2xl flex flex-col"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 md:p-5 border-b border-[#232323]">
+                <div>
+                  <h3 className="font-bold text-white text-base md:text-lg leading-tight">
+                    {activeCert.title}
+                  </h3>
+                  <p className="text-xs text-[#888888] mt-1">
+                    Issued by {activeCert.issuer} • {activeCert.year}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveCert(null)}
+                  className="w-10 h-10 rounded-full bg-[#1c1c1c] text-white hover:bg-[#2c2c2c] transition-colors flex items-center justify-center"
+                  aria-label="Close modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Image Body */}
+              <div className="relative overflow-auto max-h-[70vh] flex items-center justify-center bg-black p-2 md:p-4">
+                <img
+                  src={activeCert.image}
+                  alt={`${activeCert.title} Certificate`}
+                  className="max-w-full max-h-[65vh] object-contain rounded-lg shadow-lg border border-[#1a1a1a]"
+                />
+              </div>
+
+              {/* Footer */}
+              {activeCert.credential && (
+                <div className="flex justify-end p-4 border-t border-[#232323] bg-[#161616]">
+                  <a
+                    href={activeCert.credential}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2.5 bg-white text-black hover:bg-white/90 font-semibold text-xs rounded-lg transition-colors flex items-center gap-1.5"
+                  >
+                    Verify on Coursera
+                  </a>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

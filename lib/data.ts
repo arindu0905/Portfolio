@@ -176,12 +176,14 @@ export const certifications: Certification[] = [
     issuer: "Coursera",
     year: 2026,
     credential: "https://coursera.org/share/cf6c139bddaac36779cde3f2eb0481ef",
+    image: "/certificates/business-analysis-process-management.jpeg",
   },
   {
     title: "Introduction to Business Analysis Using Spreadsheets: Basics",
     issuer: "Coursera",
     year: 2026,
     credential: "https://coursera.org/share/14aaf6d895d8c3908cbd5a3e012630b6",
+    image: "/certificates/business-analysis-using-spreadsheets.jpeg",
   },
   {
     title: "Professional Certificate in Python Programming",
