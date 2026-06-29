@@ -162,8 +162,8 @@ export default function Hero() {
               View My Work
             </button>
             <a
-              href="/ArinduWanigasekara.pdf"
-              download="ArinduWanigasekara.pdf"
+              href="/Arindu_Mandinu_CV.pdf"
+              download="Arindu_Mandinu_CV.pdf"
               className="btn-outline px-7 py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center gap-2"
             >
               <Download size={15} />

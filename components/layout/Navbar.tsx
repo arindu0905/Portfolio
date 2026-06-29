@@ -88,8 +88,8 @@ export default function Navbar() {
           <div className="flex items-center gap-2.5">
             <ThemeToggle />
             <a
-              href="/ArinduWanigasekara.pdf"
-              download="ArinduWanigasekara.pdf"
+              href="/Arindu_Mandinu_CV.pdf"
+              download="Arindu_Mandinu_CV.pdf"
               className="btn-accent hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold"
             >
               <Download size={14} />
@@ -134,8 +134,8 @@ export default function Navbar() {
                 ))}
                 <li className="pt-2 mt-1" style={{ borderTop: "1px solid var(--border-color)" }}>
                   <a
-                    href="/ArinduWanigasekara.pdf"
-                    download="ArinduWanigasekara.pdf"
+                    href="/Arindu_Mandinu_CV.pdf"
+                    download="Arindu_Mandinu_CV.pdf"
                     className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-semibold text-theme-primary hover:bg-[var(--bg-card-hover)] transition-colors"
                   >
                     <Download size={14} />
