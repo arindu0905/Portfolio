@@ -172,6 +172,19 @@ export const experience: ExperienceItem[] = [
 
 export const certifications: Certification[] = [
   {
+    title: "Introduction to Project Management with ClickUp",
+    issuer: "Coursera",
+    year: 2026,
+    credential: "https://coursera.org/verify/OUAP7V9O9PFP",
+    image: "/certificates/project-management-with-clickup.jpeg",
+  },
+  {
+    title: "Cisco: Networking Basics",
+    issuer: "Cisco Networking Academy",
+    year: 2026,
+    image: "/certificates/networking-basics.jpeg",
+  },
+  {
     title: "Business Analysis & Process Management",
     issuer: "Coursera",
     year: 2026,
@@ -214,7 +227,7 @@ export const stats: Stat[] = [
   { label: "Projects Built", value: 5, suffix: "+" },
   { label: "Technologies", value: 20, suffix: "+" },
   { label: "Years Coding", value: 2, suffix: "+" },
-  { label: "Certifications", value: 3, suffix: "+" },
+  { label: "Certifications", value: 5, suffix: "+" },
 ];
 
 export const personalInfo = {
