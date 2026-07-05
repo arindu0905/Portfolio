@@ -10,36 +10,41 @@
 ═══════════════════════════════════════════════════ */
 :root {
   /* Backgrounds */
-  --bg-primary:      #ffffff;
-  --bg-secondary:    #f0f4ff;          /* very soft blue wash */
-  --bg-card:         rgba(59, 130, 246, 0.05);
-  --bg-card-hover:   rgba(59, 130, 246, 0.10);
+  --bg-primary:      #0F172A;          /* Slate-900 */
+  --bg-secondary:    #1E293B;          /* Slate-800 */
+  --bg-card:         rgba(30, 41, 59, 0.80);  /* Card background #1E293B */
+  --bg-card-hover:   rgba(30, 41, 59, 1.00);
 
   /* Borders */
-  --border-color:    rgba(59, 130, 246, 0.18);
-  --border-hover:    rgba(37,  99, 235, 0.55);
+  --border-color:    rgba(59, 130, 246, 0.20);
+  --border-hover:    rgba(6, 182, 212, 0.60);
 
   /* Text */
-  --text-primary:    #0a0f1e;          /* near-black with blue tint */
-  --text-secondary:  #374151;
-  --text-muted:      #6b7280;
+  --text-primary:    #F8FAFC;          /* Near-white */
+  --text-secondary:  #CBD5E1;          /* Slate-300 */
+  --text-muted:      #94A3B8;          /* Slate-400 */
 
-  /* Blue accent */
-  --accent:          #2563eb;          /* blue-600 */
-  --accent-hover:    #1d4ed8;          /* blue-700 */
+  /* Primary accent — Blue */
+  --accent:          #3B82F6;          /* Blue-500 */
+  --accent-hover:    #60A5FA;          /* Blue-400 */
   --accent-inv:      #ffffff;
-  --accent-glow:     rgba(37, 99, 235, 0.25);
-  --accent-subtle:   rgba(37, 99, 235, 0.08);
+  --accent-glow:     rgba(59, 130, 246, 0.35);
+  --accent-subtle:   rgba(59, 130, 246, 0.12);
+
+  /* Secondary accent — Cyan */
+  --accent2:         #06B6D4;          /* Cyan-500 */
+  --accent2-glow:    rgba(6, 182, 212, 0.30);
+  --accent2-subtle:  rgba(6, 182, 212, 0.10);
 
   /* UI chrome */
-  --scrollbar-bg:    #f0f4ff;
-  --scrollbar-thumb: rgba(37, 99, 235, 0.3);
-  --nav-bg:          rgba(255, 255, 255, 0.88);
-  --shadow-sm:       rgba(37, 99, 235, 0.08);
-  --shadow-md:       rgba(37, 99, 235, 0.15);
-  --grid-line:       rgba(59, 130, 246, 0.06);
-  --particle:        rgba(59, 130, 246, 0.25);
-  --ring:            linear-gradient(135deg, #2563eb, #60a5fa, #0ea5e9, #2563eb);
+  --scrollbar-bg:    #0F172A;
+  --scrollbar-thumb: rgba(59, 130, 246, 0.35);
+  --nav-bg:          rgba(15, 23, 42, 0.90);
+  --shadow-sm:       rgba(0, 0, 0, 0.25);
+  --shadow-md:       rgba(0, 0, 0, 0.45);
+  --grid-line:       rgba(59, 130, 246, 0.07);
+  --particle:        rgba(6, 182, 212, 0.20);
+  --ring:            linear-gradient(135deg, #3B82F6, #06B6D4, #60A5FA, #3B82F6);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -47,37 +52,42 @@
    Near-black bg · White text · Blue accents
 ═══════════════════════════════════════════════════ */
 html.dark {
-  /* Backgrounds — dark navy-black */
-  --bg-primary:      #060b18;          /* deep dark blue-black */
-  --bg-secondary:    #0c1427;          /* slightly lighter */
-  --bg-card:         rgba(59, 130, 246, 0.06);
-  --bg-card-hover:   rgba(59, 130, 246, 0.12);
+  /* Backgrounds */
+  --bg-primary:      #0F172A;          /* Slate-900 */
+  --bg-secondary:    #1E293B;          /* Slate-800 / Card base */
+  --bg-card:         rgba(30, 41, 59, 0.80);
+  --bg-card-hover:   rgba(30, 41, 59, 1.00);
 
   /* Borders */
-  --border-color:    rgba(59, 130, 246, 0.15);
-  --border-hover:    rgba(96, 165, 250, 0.5);
+  --border-color:    rgba(59, 130, 246, 0.20);
+  --border-hover:    rgba(6, 182, 212, 0.60);
 
   /* Text */
-  --text-primary:    #f0f6ff;          /* white with faint blue */
-  --text-secondary:  #94a3b8;
-  --text-muted:      #475569;
+  --text-primary:    #F8FAFC;          /* Near-white */
+  --text-secondary:  #CBD5E1;          /* Slate-300 */
+  --text-muted:      #94A3B8;          /* Slate-400 */
 
-  /* Blue accent */
-  --accent:          #3b82f6;          /* blue-500 — brighter on dark */
-  --accent-hover:    #60a5fa;          /* blue-400 */
+  /* Primary accent — Blue */
+  --accent:          #3B82F6;          /* Blue-500 */
+  --accent-hover:    #60A5FA;          /* Blue-400 */
   --accent-inv:      #ffffff;
   --accent-glow:     rgba(59, 130, 246, 0.35);
-  --accent-subtle:   rgba(59, 130, 246, 0.10);
+  --accent-subtle:   rgba(59, 130, 246, 0.12);
+
+  /* Secondary accent — Cyan */
+  --accent2:         #06B6D4;          /* Cyan-500 */
+  --accent2-glow:    rgba(6, 182, 212, 0.30);
+  --accent2-subtle:  rgba(6, 182, 212, 0.10);
 
   /* UI chrome */
-  --scrollbar-bg:    #060b18;
-  --scrollbar-thumb: rgba(59, 130, 246, 0.3);
-  --nav-bg:          rgba(6, 11, 24, 0.88);
-  --shadow-sm:       rgba(0, 0, 0, 0.3);
-  --shadow-md:       rgba(0, 0, 0, 0.5);
-  --grid-line:       rgba(59, 130, 246, 0.06);
-  --particle:        rgba(59, 130, 246, 0.18);
-  --ring:            linear-gradient(135deg, #3b82f6, #93c5fd, #0ea5e9, #3b82f6);
+  --scrollbar-bg:    #0F172A;
+  --scrollbar-thumb: rgba(59, 130, 246, 0.35);
+  --nav-bg:          rgba(15, 23, 42, 0.90);
+  --shadow-sm:       rgba(0, 0, 0, 0.30);
+  --shadow-md:       rgba(0, 0, 0, 0.50);
+  --grid-line:       rgba(59, 130, 246, 0.07);
+  --particle:        rgba(6, 182, 212, 0.18);
+  --ring:            linear-gradient(135deg, #3B82F6, #06B6D4, #60A5FA, #3B82F6);
 }
 
 /* ═══════════════════════════════════════════════════
