@@ -101,7 +101,7 @@ export default function About() {
               <div className="space-y-5">
                 {[
                   { label: "Degree", value: "BSc (Hons) Information Systems Engineering" },
-                  { label: "University Year", value: "1st Year (2024–2028)" },
+                  { label: "University Year", value: "3rd Year (2024–2028)" },
                   { label: "Status", value: "Open to Internships & Opportunities" },
                   { label: "Focus Areas", value: "Web Dev · AI/ML · System Design" },
                 ].map(({ label, value }) => (
