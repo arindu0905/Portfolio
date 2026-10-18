@@ -9,13 +9,11 @@ import {
 } from "@/types";
 
 export const navItems: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Certifications", href: "#certifications" },
-  { label: "Contact", href: "#contact" },
+  { label: "./home", href: "/#home" },
+  { label: "./modules", href: "/#projects" },
+  { label: "./stack", href: "/#stack" },
+  { label: "./log", href: "/#log" },
+  { label: "./uplink", href: "/#contact" },
 ];
 
 export const skills: Skill[] = [
@@ -23,6 +21,7 @@ export const skills: Skill[] = [
   { name: "Java", category: "language" },
   { name: "Python", category: "language" },
   { name: "JavaScript", category: "language" },
+  { name: "TypeScript", category: "language" },
   { name: "SQL", category: "language" },
   { name: "R", category: "language" },
   // Frontend
@@ -35,15 +34,18 @@ export const skills: Skill[] = [
   { name: "Spring Boot", category: "backend" },
   { name: "Flask", category: "backend" },
   { name: "Node.js", category: "backend" },
+  { name: "Express", category: "backend" },
   // Databases
   { name: "MongoDB", category: "database" },
   { name: "Supabase", category: "database" },
+  { name: "PostgreSQL", category: "database" },
   { name: "SQL Databases", category: "database" },
   // Tools
   { name: "IntelliJ IDEA", category: "tool" },
   { name: "VS Code", category: "tool" },
   { name: "Google Colab", category: "tool" },
-  { name: "Git & GitHub", category: "tool" },
+  { name: "Git", category: "tool" },
+  { name: "GitHub", category: "tool" },
   // Soft Skills
   { name: "Problem Solving", category: "soft" },
   { name: "Teamwork", category: "soft" },
@@ -53,9 +55,46 @@ export const skills: Skill[] = [
   { name: "Attention to Detail", category: "soft" },
 ];
 
+export const categoryLabels: Record<Project["category"], string> = {
+  web: "web",
+  "ai-ml": "ai / ml",
+  hardware: "hardware",
+  other: "other",
+};
+
 export const projects: Project[] = [
   {
+    id: "harvest-hub",
+    code: "HARVESTHUB",
+    accent: "#84cc16",
+    title: "Saara Ketha Harvest Hub",
+    year: 2026,
+    description:
+      "Full-stack platform that digitises agricultural collection centres in Sri Lanka — from farmer registration and crop deliveries to quality grading, buyer orders and farmer payments.",
+    overview:
+      "HarvestHub replaces the paper-based workflow of a Sri Lankan agricultural collection centre with one secure, role-based platform. It connects nine roles — farmers, collection centre officers, quality inspectors, inventory managers, buyers, finance officers, transport coordinators, managers and administrators. Produce is weighed and graded on arrival, tracked through the warehouse in batches, sold through a buyer marketplace with bidding, and paid out to farmers with receipts and partial payments. A transparent crop-advisor engine scores what a farmer should plant next using district fit, crop rotation, soil pH and rainfall, and shows the reasons behind each recommendation. The whole experience is available in Sinhala, Tamil and English so farmers can use it in their own language. The React + TypeScript frontend runs on Vercel, backed by a Node.js/Express REST API and Supabase (PostgreSQL, Auth, Storage, Realtime and row-level security).",
+    technologies: ["React", "TypeScript", "Node.js", "Express", "Supabase", "PostgreSQL", "Tailwind CSS"],
+    features: [
+      "9 role-based dashboards",
+      "Digital weighing & quality grading",
+      "Batch-traceable inventory",
+      "Buyer marketplace & bidding",
+      "Farmer payments & receipts",
+      "Transport & delivery scheduling",
+      "Crop advisor scoring engine",
+      "Sinhala, Tamil & English UI",
+      "Reports, notifications & audit log",
+    ],
+    category: "web",
+    featured: true,
+    github: "https://github.com/arindu0905/Sara-Ketha-Harvest-Hub",
+    live: "https://sara-ketha-harvest-hub-w8ld.vercel.app/",
+    screenshots: ["/projects/harvest-hub/landing.jpg", "/projects/harvest-hub/steps-and-prices.jpg"],
+  },
+  {
     id: "lmms",
+    code: "LMMS",
+    accent: "#f59e0b",
     title: "Laser Mobile Management System (LMMS)",
     year: 2026,
     description:
@@ -74,6 +113,8 @@ export const projects: Project[] = [
   },
   {
     id: "edufix",
+    code: "EDUFIX",
+    accent: "#8b5cf6",
     title: "EduFix Web-Based Help Desk",
     year: 2025,
     description:
@@ -89,6 +130,8 @@ export const projects: Project[] = [
   },
   {
     id: "diabetes-detector",
+    code: "DIAB.AI",
+    accent: "#ef4444",
     title: "AI/ML Diabetes Detector",
     year: 2025,
     description:
@@ -107,6 +150,8 @@ export const projects: Project[] = [
   },
   {
     id: "real-estate",
+    code: "REALTY",
+    accent: "#3b82f6",
     title: "Real Estate Management System",
     year: 2025,
     description:
@@ -122,6 +167,8 @@ export const projects: Project[] = [
   },
   {
     id: "smart-home",
+    code: "IOT.HOME",
+    accent: "#10b981",
     title: "Smart Home Automation System",
     year: 2024,
     description:
@@ -224,10 +271,10 @@ export const socialLinks: SocialLink[] = [
 ];
 
 export const stats: Stat[] = [
-  { label: "Projects Built", value: 5, suffix: "+" },
-  { label: "Technologies", value: 20, suffix: "+" },
-  { label: "Years Coding", value: 2, suffix: "+" },
-  { label: "Certifications", value: 5, suffix: "+" },
+  { tag: "built", label: "production-style systems", value: 6, suffix: "+" },
+  { tag: "stack", label: "technologies in use", value: 20, suffix: "+" },
+  { tag: "certs", label: "verified credentials", value: 5 },
+  { tag: "industry", label: "at Heineken", value: 1, suffix: "yr" },
 ];
 
 export const personalInfo = {
@@ -242,6 +289,10 @@ export const personalInfo = {
     "Problem Solver",
   ],
   location: "Homagama, Sri Lanka",
+  tagline:
+    "Information Systems Engineering undergrad who builds real systems — inventory platforms, help desks, ML models and IoT hardware. I turn messy business problems into clean software.",
+  studyYear: "3rd year undergraduate",
+  cv: "/Arindu_Mandinu_CV.pdf",
   email: "arindumandinu2004@gmail.com",
   phone: "+94 76 398 1811",
   about: `I am a passionate Information Systems Engineering undergraduate with strong interests in Software Engineering, Web Development, Artificial Intelligence, and Machine Learning. I enjoy building practical solutions using modern technologies and continuously improving my technical and problem-solving skills. I actively contribute to collaborative projects and seek opportunities to gain industry experience while creating impactful digital solutions.`,
