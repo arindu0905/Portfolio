@@ -1,27 +1,25 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import ScrollProgress from "@/components/common/ScrollProgress";
+import BootScreen from "@/components/hud/BootScreen";
+import HudRails from "@/components/hud/HudRails";
 import Hero from "@/components/sections/Hero";
-import About from "@/components/sections/About";
-import Skills from "@/components/sections/Skills";
-import Experience from "@/components/sections/Experience";
+import Telemetry from "@/components/sections/Telemetry";
 import Projects from "@/components/sections/Projects";
-import Certifications from "@/components/sections/Certifications";
+import Stack from "@/components/sections/Stack";
+import MissionLog from "@/components/sections/MissionLog";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
-      <ScrollProgress />
-      <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Certifications />
-      <Contact />
-      <Footer />
-    </main>
+    <>
+      <BootScreen />
+      <HudRails />
+      <main className="relative z-[2] max-w-[1200px] mx-auto px-6">
+        <Hero />
+        <Telemetry />
+        <Projects />
+        <Stack />
+        <MissionLog />
+        <Contact />
+      </main>
+    </>
   );
 }

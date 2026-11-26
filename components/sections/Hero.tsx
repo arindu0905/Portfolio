@@ -1,264 +1,110 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Download, ArrowDown, MapPin } from "lucide-react";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Image from "next/image";
 import { personalInfo } from "@/lib/data";
+import { OPEN_TERMINAL_EVENT } from "@/components/hud/Terminal";
 
-const PARTICLE_COUNT = 50;
+const ROLES = ["full stack developer", "information systems engineer", "ai / ml enthusiast", "problem solver"];
 
-function Particles() {
-  const [particles, setParticles] = useState<
-    { x: number; y: number; size: number; delay: number; duration: number }[]
-  >([]);
+/** 72 tick marks around the reactor; rounded so server and client markup match. */
+const TICKS = Array.from({ length: 72 }, (_, i) => {
+  const a = (i * 5 * Math.PI) / 180;
+  const major = i % 6 === 0;
+  const r1 = major ? 130 : 138;
+  const p = (r: number, f: (x: number) => number) => Math.round((200 + r * f(a)) * 100) / 100;
+  return { x1: p(r1, Math.cos), y1: p(r1, Math.sin), x2: p(144, Math.cos), y2: p(144, Math.sin), major };
+});
 
+function useTypedRoles() {
+  const [text, setText] = useState("> ");
   useEffect(() => {
-    setParticles(
-      Array.from({ length: PARTICLE_COUNT }, () => ({
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 2 + 1,
-        delay: Math.random() * 5,
-        duration: Math.random() * 8 + 5,
-      }))
-    );
+    let i = 0, j = 2, deleting = false;
+    let t: ReturnType<typeof setTimeout>;
+    const step = () => {
+      const word = `> ${ROLES[i]}`;
+      setText(word.slice(0, j));
+      if (!deleting && j === word.length) {
+        deleting = true;
+        t = setTimeout(step, 1600);
+        return;
+      }
+      if (deleting && j === 2) {
+        deleting = false;
+        i = (i + 1) % ROLES.length;
+      }
+      j += deleting ? -1 : 1;
+      t = setTimeout(step, deleting ? 28 : 55);
+    };
+    step();
+    return () => clearTimeout(t);
   }, []);
+  return text;
+}
 
+function Reactor() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p, i) => (
-        <motion.div
-          key={i}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            background: "var(--particle)",
-          }}
-          animate={{ y: [0, -40, 0], opacity: [0, 1, 0] }}
-          transition={{
-            duration: p.duration,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
+    <div className="relative aspect-square w-[min(420px,80vw)] justify-self-center">
+      <svg viewBox="0 0 400 400" className="absolute inset-0 w-full h-full overflow-visible" aria-hidden>
+        <defs>
+          <linearGradient id="reactor-arc" x1="0" x2="1">
+            <stop offset="0" stopColor="#22d3ee" />
+            <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <g className="spin"><circle cx="200" cy="200" r="190" fill="none" stroke="#22d3ee" strokeOpacity=".35" strokeDasharray="2 8" /></g>
+        <g className="spin spin-rev"><circle cx="200" cy="200" r="172" fill="none" stroke="#22d3ee" strokeWidth="2" strokeDasharray="120 40 20 40" strokeOpacity=".8" /></g>
+        <g className="spin spin-fast"><circle cx="200" cy="200" r="156" fill="none" stroke="url(#reactor-arc)" strokeWidth="3" strokeDasharray="180 800" /></g>
+        <g className="spin spin-slow">
+          {TICKS.map((t, i) => (
+            <line key={i} x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} stroke="#22d3ee" strokeOpacity={t.major ? 0.9 : 0.35} />
+          ))}
+        </g>
+        <circle cx="200" cy="200" r="104" fill="none" stroke="#10b981" strokeOpacity=".5" strokeDasharray="1 5" />
+      </svg>
+      <div className="reactor-photo">
+        <Image src="/profile.jpg" alt={personalInfo.name} fill priority sizes="220px" className="object-cover saturate-[.85]" />
+      </div>
+      <span className="orb-label top-[8%] -left-[2%]">JAVA · SPRING</span>
+      <span className="orb-label top-[46%] -right-[6%]">REACT · NEXT</span>
+      <span className="orb-label bottom-[6%] left-[8%]">PYTHON · ML</span>
+      <span className="absolute -top-[4%] right-0 text-right font-mono text-[10px] text-muted-hud leading-relaxed">LAT 6.84°N<br />LON 80.00°E</span>
+      <span className="absolute -bottom-[4%] right-[4%] text-right font-mono text-[10px] text-muted-hud leading-relaxed">SIGNAL 98%<br />ID AMW-0905</span>
     </div>
   );
 }
 
 export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const roles = personalInfo.roles;
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2800);
-    return () => clearInterval(interval);
-  }, [roles.length]);
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const role = useTypedRoles();
+  const [first, ...rest] = personalInfo.name.split(" ");
+  const last = rest[rest.length - 1];
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden section-bg"
-    >
-      {/* Subtle blue grid */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `linear-gradient(var(--grid-line) 1px, transparent 1px),
-                            linear-gradient(90deg, var(--grid-line) 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
-        }}
-      />
-
-      {/* Blue glow orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-48 -left-48 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse" style={{ background: "var(--accent)" }} />
-        <div className="absolute -bottom-32 -right-32 w-80 h-80 rounded-full blur-3xl opacity-15 animate-pulse" style={{ background: "var(--accent)", animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full blur-3xl opacity-10" style={{ background: "var(--accent)" }} />
-      </div>
-
-      <Particles />
-
-      <div className="relative z-10 max-w-6xl mx-auto px-4 pt-28 pb-16 flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-        {/* Text Content */}
-        <div className="flex-1 text-center lg:text-left">
-
-          {/* Available badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full theme-card text-xs font-semibold tracking-widest uppercase mb-8"
-          >
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--accent)" }} />
-            <span className="text-accent">Available for opportunities</span>
-          </motion.div>
-
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-theme-primary mb-6 leading-[1.0] tracking-tight"
-          >
-            Hi, I&apos;m
-            <br />
-            <span className="text-theme-primary">Arindu</span>
-          </motion.h1>
-
-          {/* Animated role */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="h-10 flex items-center justify-center lg:justify-start mb-4"
-          >
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={roleIndex}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="text-xl md:text-2xl text-theme-secondary font-light"
-              >
-                {roles[roleIndex]}
-              </motion.p>
-            </AnimatePresence>
-          </motion.div>
-
-          {/* Location */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="flex items-center justify-center lg:justify-start gap-1.5 text-theme-muted text-sm mb-10"
-          >
-            <MapPin size={13} />
-            {personalInfo.location}
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap gap-3 justify-center lg:justify-start mb-10"
-          >
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="btn-accent px-7 py-3.5 rounded-xl font-semibold text-sm tracking-wide"
-            >
-              View My Work
-            </button>
-            <a
-              href="/Arindu_Mandinu_CV.pdf"
-              download="Arindu_Mandinu_CV.pdf"
-              className="btn-outline px-7 py-3.5 rounded-xl font-semibold text-sm tracking-wide flex items-center gap-2"
-            >
-              <Download size={15} />
-              Download CV
-            </a>
-          </motion.div>
-
-          {/* Social Icons */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex gap-2.5 justify-center lg:justify-start"
-          >
-            {[
-              { icon: FaGithub, href: "https://github.com/arindu0905", label: "GitHub" },
-              { icon: FaLinkedin, href: "https://linkedin.com/in/arindumandinu", label: "LinkedIn" },
-              { icon: Mail, href: `mailto:${personalInfo.email}`, label: "Email" },
-            ].map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="btn-icon w-11 h-11 rounded-xl flex items-center justify-center"
-              >
-                <Icon size={17} />
-              </a>
-            ))}
-          </motion.div>
+    <section id="home" className="min-h-screen grid grid-cols-1 min-[900px]:grid-cols-[minmax(0,1.2fr)_minmax(0,.8fr)] items-center gap-10 pt-32 pb-10">
+      <div>
+        <div className="tag">
+          <span className="status-on">SYS.OPERATOR // ONLINE</span> &nbsp;·&nbsp; open to internships
         </div>
-
-        {/* Avatar */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.25, type: "spring", stiffness: 90 }}
-          className="relative flex-shrink-0"
+        <h1 className="font-display font-black text-[clamp(34px,5.6vw,74px)] leading-[.98] tracking-[.02em] mt-[22px] mb-[18px]">
+          <span className="glitch" data-text={first.toUpperCase()}>{first.toUpperCase()}</span>
+          <br />
+          <span className="outline-text">{last.toUpperCase()}</span>
+        </h1>
+        <div className="caret font-mono text-[clamp(14px,1.6vw,18px)] text-cyan-hud min-h-[1.6em]" aria-label={ROLES[0]}>
+          {role}
+        </div>
+        <p className="text-muted-hud text-base leading-[1.75] max-w-[540px] mt-5 mb-[30px]">{personalInfo.tagline}</p>
+        <div className="flex gap-3 flex-wrap">
+          <a className="btn btn-primary" href="#projects">▶ Launch projects</a>
+          <a className="btn btn-ghost" href="#contact">Open uplink</a>
+        </div>
+        <button
+          onClick={() => window.dispatchEvent(new Event(OPEN_TERMINAL_EVENT))}
+          className="mt-[26px] font-mono text-[11px] text-muted-hud hover:text-cyan-hud hidden min-[900px]:block"
         >
-          <div className="relative w-60 h-60 md:w-72 md:h-72">
-            {/* Spinning border ring */}
-            <div
-              className="absolute inset-0 rounded-full p-[2px] animate-spin-slow"
-              style={{ background: "var(--ring)" }}
-            >
-              <div className="w-full h-full rounded-full section-bg" />
-            </div>
-
-            {/* Inner - Profile Photo */}
-            <div
-              className="absolute inset-[5px] rounded-full overflow-hidden"
-              style={{ border: "1px solid var(--border-color)" }}
-            >
-              <img
-                src="/profile.jpg"
-                alt="Arindu Wanigasekara - AMW Full Stack Developer"
-                className="w-full h-full object-cover object-center"
-              />
-            </div>
-
-            {/* Floating badges */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="theme-card absolute -top-4 -right-6 px-3 py-1.5 rounded-xl text-xs font-semibold"
-              style={{ color: "var(--text-secondary)", boxShadow: `0 4px 16px var(--shadow)` }}
-            >
-              🚀 Open to Work
-            </motion.div>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="theme-card absolute -bottom-4 -left-6 px-3 py-1.5 rounded-xl text-xs font-semibold"
-              style={{ color: "var(--text-secondary)", boxShadow: `0 4px 16px var(--shadow)` }}
-            >
-              💡 AI & ML
-            </motion.div>
-          </div>
-        </motion.div>
+          tip: press <kbd className="key">/</kbd> to open the terminal
+        </button>
       </div>
-
-      {/* Scroll hint */}
-      <motion.button
-        onClick={() => scrollToSection("about")}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.3, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-theme-muted hover:text-theme-primary transition-colors"
-      >
-        <span className="text-[10px] font-semibold tracking-[0.2em] uppercase">Scroll</span>
-        <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-          <ArrowDown size={14} />
-        </motion.div>
-      </motion.button>
+      <Reactor />
     </section>
   );
 }

@@ -1,76 +1,64 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "next-themes";
+import { Inter, JetBrains_Mono, Orbitron } from "next/font/google";
+import Background from "@/components/hud/Background";
+import Cursor from "@/components/hud/Cursor";
+import MagneticField from "@/components/hud/MagneticField";
+import Terminal from "@/components/hud/Terminal";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
+const orbitron = Orbitron({ subsets: ["latin"], weight: ["500", "700", "900"], display: "swap", variable: "--font-orbitron" });
+const jetbrains = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "600"], display: "swap", variable: "--font-jetbrains" });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: "#03060d",
 };
 
+const description =
+  "Portfolio of Arindu Mandinu Wanigasekara — Information Systems Engineering undergraduate, full stack developer and AI/ML enthusiast from Sri Lanka.";
+
 export const metadata: Metadata = {
-  title: "Arindu Mandinu Wanigasekara | Software Developer & IS Engineer",
-  description:
-    "Portfolio of Arindu Mandinu Wanigasekara — Information Systems Engineering Undergraduate, Software Developer, and AI & ML Enthusiast from Sri Lanka. Explore my projects, skills, and experience.",
+  title: {
+    default: "Arindu Mandinu Wanigasekara | Full Stack Developer",
+    template: "%s | Arindu Wanigasekara",
+  },
+  description,
   keywords: [
-    "Arindu Wanigasekara",
-    "Software Developer",
-    "Information Systems Engineering",
-    "Full Stack Developer",
-    "AI ML",
-    "React",
-    "Next.js",
-    "Sri Lanka",
-    "Portfolio",
+    "Arindu Wanigasekara", "Software Developer", "Full Stack Developer", "Information Systems Engineering",
+    "AI ML", "React", "Next.js", "Spring Boot", "Sri Lanka", "Portfolio",
   ],
   authors: [{ name: "Arindu Mandinu Wanigasekara" }],
   creator: "Arindu Mandinu Wanigasekara",
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Arindu Mandinu Wanigasekara | Software Developer",
-    description:
-      "Information Systems Engineering Undergraduate | Software Developer | AI & ML Enthusiast",
-    siteName: "Arindu Portfolio",
+    title: "Arindu Mandinu Wanigasekara | Full Stack Developer",
+    description,
+    siteName: "arindu.dev",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arindu Mandinu Wanigasekara | Software Developer",
-    description:
-      "Information Systems Engineering Undergraduate | Software Developer | AI & ML Enthusiast",
+    title: "Arindu Mandinu Wanigasekara | Full Stack Developer",
+    description,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
-  },
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange={false}
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en" className={`${inter.variable} ${orbitron.variable} ${jetbrains.variable}`}>
+      <body>
+        <Background />
+        <Navbar />
+        {children}
+        <Footer />
+        <Terminal />
+        <Cursor />
+        <MagneticField />
       </body>
     </html>
   );
